@@ -17,12 +17,27 @@ class _TasksListState extends State<TasksList> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        TasksTitle(taskTitle: tasks[0].name, isChecked: tasks[0].isDone),
-        TasksTitle(taskTitle: tasks[1].name, isChecked: tasks[1].isDone),
-        TasksTitle(taskTitle: tasks[2].name, isChecked: tasks[2].isDone),
-      ],
+    return ListView.builder(
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        return TasksTitle(
+          taskTitle: tasks[index].name,
+          isChecked: tasks[index].isDone,
+          checkboxChange: (newValue) {
+            setState(() {
+              tasks[index].doneChange();
+            });
+          },
+        );
+      },
     );
+    //   return ListView(
+    //     children: [
+    //       TasksTitle(taskTitle: tasks[0].name, isChecked: tasks[0].isDone),
+    //       TasksTitle(taskTitle: tasks[1].name, isChecked: tasks[1].isDone),
+    //       TasksTitle(taskTitle: tasks[2].name, isChecked: tasks[2].isDone),
+    //     ],
+    //   );
+    // }
   }
 }
