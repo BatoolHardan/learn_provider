@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:today_app/models/tasks.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
+
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  List<Task> tasks = [
+    Task(name: 'go shopping', isDone: false),
+    Task(name: 'buy a gift', isDone: false),
+    Task(name: 'repair the car', isDone: false),
+  ];
 
   @override
   Widget build(BuildContext context) {

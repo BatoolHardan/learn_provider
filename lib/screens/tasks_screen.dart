@@ -60,7 +60,7 @@ class TasksScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  child: TasksList(),
+                  child: TasksList(tasks: []),
                 ),
               ),
             ],
