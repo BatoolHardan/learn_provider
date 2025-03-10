@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:today_app/models/tasks.dart';
 import 'package:today_app/screens/add_task_screen.dart';
 import 'package:today_app/widgets/tasks_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'go shopping', isDone: true),
+    Task(name: 'go shopping', isDone: true),
+    Task(name: 'go shopping', isDone: true),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +32,14 @@ class TasksScreen extends StatelessWidget {
                     padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
-                    child: AddTaskScreen(),
+                    child: AddTaskScreen(
+                      addTaskCallback: (newTaskTitle) {
+                        setState(() {
+                          tasks.add(Task(name: newTaskTitle, isDone: true));
+                          Navigator.pop(context);
+                        });
+                      },
+                    ),
                   ),
                 ),
           );
@@ -50,7 +69,7 @@ class TasksScreen extends StatelessWidget {
                 ],
               ),
               Text(
-                '4 tasks',
+                ' ${tasks.length} tasks',
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               SizedBox(height: 20),
@@ -60,7 +79,7 @@ class TasksScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  child: TasksList(tasks: []),
+                  child: TasksList(tasks: tasks),
                 ),
               ),
             ],

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:today_app/models/tasks.dart';
+import 'tasks_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  final Function addTaskCallback;
+  const AddTaskScreen({super.key, required this.addTaskCallback});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -10,13 +12,14 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   List<Task> tasks = [
-    Task(name: 'go shopping', isDone: false),
-    Task(name: 'buy a gift', isDone: false),
-    Task(name: 'repair the car', isDone: false),
+    Task(name: 'go shopping', isDone: true),
+    Task(name: 'go shopping', isDone: true),
+    Task(name: 'go shopping', isDone: true),
   ];
 
   @override
   Widget build(BuildContext context) {
+    String? newTasktitle;
     return Container(
       padding: EdgeInsets.all(30),
       child: Column(
@@ -31,14 +34,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextField(autofocus: true, textAlign: TextAlign.center),
+          TextField(
+            autofocus: true,
+            textAlign: TextAlign.center,
+            onChanged: (newText) {
+              newTasktitle = newText;
+            },
+          ),
           SizedBox(height: 30),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              widget.addTaskCallback(newTasktitle);
+            },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
               backgroundColor: Colors.teal[400],
             ),
+
             child: Text('Add'),
           ),
         ],
