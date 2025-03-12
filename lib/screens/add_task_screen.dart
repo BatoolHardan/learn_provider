@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:today_app/models/task_data.dart';
 import 'package:today_app/models/tasks.dart';
 import 'tasks_screen.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final Function(String) addTaskCallback;
@@ -42,7 +44,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           TextButton(
             onPressed: () {
               if (newTaskTitle != null && newTaskTitle!.trim().isNotEmpty) {
-                widget.addTaskCallback(newTaskTitle!);
+                Provider.of<TaskData>(
+                  context,
+                  listen: false,
+                ).addTask(newTaskTitle!);
                 Navigator.pop(context);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
