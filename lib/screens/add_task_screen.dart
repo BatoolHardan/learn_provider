@@ -3,7 +3,7 @@ import 'package:today_app/models/tasks.dart';
 import 'tasks_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final Function addTaskCallback;
+  final Function(String) addTaskCallback;
   const AddTaskScreen({super.key, required this.addTaskCallback});
 
   @override
@@ -11,26 +11,21 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  List<Task> tasks = [
-    Task(name: 'go shopping', isDone: true),
-    Task(name: 'go shopping', isDone: true),
-    Task(name: 'go shopping', isDone: true),
-  ];
+  String? newTaskTitle;
 
   @override
   Widget build(BuildContext context) {
-    String? newTasktitle;
     return Container(
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             "Add Task",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 30,
-              color: Colors.indigo[400],
+              color: Colors.indigo,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -38,20 +33,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             autofocus: true,
             textAlign: TextAlign.center,
             onChanged: (newText) {
-              newTasktitle = newText;
+              setState(() {
+                newTaskTitle = newText;
+              });
             },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           TextButton(
             onPressed: () {
-              widget.addTaskCallback(newTasktitle);
+              if (newTaskTitle != null && newTaskTitle!.trim().isNotEmpty) {
+                widget.addTaskCallback(newTaskTitle!);
+                Navigator.pop(context);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please enter a task')),
+                );
+              }
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
               backgroundColor: Colors.teal[400],
             ),
-
-            child: Text('Add'),
+            child: const Text('Add'),
           ),
         ],
       ),
